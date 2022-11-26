@@ -1,0 +1,17 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:10.5
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    volumes:
+      # copy the sql script to create tables
+      - ./sql/create_events_tables.sql:/docker-entrypoint-initdb.d/create_events_tables.sql
+      - ./sql/create_stores_table.sql:/docker-entrypoint-initdb.d/create_stores_table.sql
